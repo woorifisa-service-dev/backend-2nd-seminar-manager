@@ -28,7 +28,7 @@ public class SeminarType {
     @JoinColumn(name = "class_no", nullable = false)
     private Clazz clazz;
 
-    @Column(length = 50, nullable = false)
+    @Column(nullable = false, length = 50)
     private String name;
 
     @Column(nullable = false)

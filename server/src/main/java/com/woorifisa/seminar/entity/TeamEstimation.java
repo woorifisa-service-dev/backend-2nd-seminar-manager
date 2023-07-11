@@ -34,4 +34,5 @@ public class TeamEstimation {
 
     @Column(name = "target_member_no", nullable = false)
     private Long targetMemberNo;
+    
 }
