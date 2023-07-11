@@ -12,21 +12,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="estimation_items")
+@Table(name="classes")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class EstimationItem {
+public class Clazz {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="item_no")
+	@Column(name="class_no")
 	private Long id;
 	
 	@Column
-	private String title;
+	private String name;
 	
-	@Column(name="max_score")
-	private Integer maxScore;
 	
-	@Column
-	private Integer order;
 }
