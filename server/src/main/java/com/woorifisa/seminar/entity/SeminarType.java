@@ -25,13 +25,16 @@ public class SeminarType {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "class_no")
+    @JoinColumn(name = "class_no", nullable = false)
     private Clazz clazz;
 
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private LocalDate beginDate;
+
+    @Column(nullable = false)
     private LocalDate endDate;
 
 }

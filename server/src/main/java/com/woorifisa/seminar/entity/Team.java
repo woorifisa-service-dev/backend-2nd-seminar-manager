@@ -24,12 +24,12 @@ public class Team {
     private Id id;
 
     @ManyToOne
-    @JoinColumn(name = "member_no")
+    @JoinColumn(name = "member_no", nullable = false)
     @MapsId("memberId")
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "subject_no")
+    @JoinColumn(name = "subject_no", nullable = false)
     @MapsId("subjectId")
     private Subject subject;
 

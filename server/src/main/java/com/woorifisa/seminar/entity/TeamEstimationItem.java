@@ -2,6 +2,7 @@ package com.woorifisa.seminar.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,11 +24,12 @@ public class TeamEstimationItem {
     @Column(name = "other_estimation_no")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "subject_no")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subject_no", nullable = false)
     private Subject subject;
 
-    @ManyToOne
-    @JoinColumn(name = "member_no")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_no", nullable = false)
     private Member member;
+
 }

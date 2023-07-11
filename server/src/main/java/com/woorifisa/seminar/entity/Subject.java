@@ -24,11 +24,14 @@ public class Subject {
     @Column(name = "subject_no")
     private Long id;
 
+    @Column(nullable = false, length = 20)
     private String title;
+
+    @Column(nullable = false)
     private Integer order;
 
     @ManyToOne
-    @JoinColumn(name = "seminar_type_no")
+    @JoinColumn(name = "seminar_type_no", nullable = false)
     private SeminarType seminarType;
 
 }
