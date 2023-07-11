@@ -15,6 +15,7 @@ import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,6 +45,8 @@ public class OtherEstimationItem {
 	@NoArgsConstructor // 아무 인자 없는 생성자
 	@EqualsAndHashCode // equals 랑 hashcode 메서드를 합쳐 놓은 건데, 동일성을 확인하려고 한다.
 	@Embeddable
+	@AllArgsConstructor
+	@Getter
 	static class Id implements Serializable {
 		private Long estimationItemId;
 		private Long otherEstimationId;

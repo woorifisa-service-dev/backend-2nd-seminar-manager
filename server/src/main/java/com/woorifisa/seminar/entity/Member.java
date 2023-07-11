@@ -29,26 +29,26 @@ public class Member {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(name = "role_no")
+	@JoinColumn(nullable = false, name = "role_no")
 	private Role role;
 	
 	@ManyToOne
-	@JoinColumn(name = "class_no")
+	@JoinColumn(nullable = false, name = "class_no")
 	private Clazz clazz;
 	
-	@Column
+	@Column(nullable = false, length = 20)
 	private String username;
 	
-	@Column
+	@Column(nullable = false, length = 100)
 	private String password;
 	
-	@Column
+	@Column(nullable = false, length = 100)
 	private String email;
 	
-	@Column
+	@Column(nullable = false, length = 10)
 	private String name;
 	
-	@Column(name="created_at")
+	@Column(nullable = false, name="created_at")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate createdAt;
 }

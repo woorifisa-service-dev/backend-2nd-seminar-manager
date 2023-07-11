@@ -22,7 +22,7 @@ public class Role {
 	@Column(name="role_no")
 	private Long id;
 	
-	@Column
+	@Column(nullable = false, length = 10)
 	private String name;
 	
 	

@@ -22,7 +22,7 @@ public class Clazz {
 	@Column(name="class_no")
 	private Long id;
 	
-	@Column
+	@Column(nullable = false, length = 20)
 	private String name;
 	
 	

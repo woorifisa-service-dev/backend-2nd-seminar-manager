@@ -21,12 +21,12 @@ public class EstimationItem {
 	@Column(name="item_no")
 	private Long id;
 	
-	@Column
+	@Column(nullable = false, length = 500)
 	private String title;
 	
-	@Column(name="max_score")
+	@Column(nullable = false, name="max_score")
 	private Integer maxScore;
 	
-	@Column
+	@Column(nullable = false)
 	private Integer order;
 }
