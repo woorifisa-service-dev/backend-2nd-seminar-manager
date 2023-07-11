@@ -24,10 +24,10 @@ public class OtherEstimation {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(nullable = false, name = "member_no")
+	@JoinColumn(name = "member_no", nullable = false)
 	private Member member;
 	
 	@ManyToOne
-	@JoinColumn(nullable = false, name = "subject_no")
+	@JoinColumn(name = "subject_no", nullable = false)
 	private Subject subject;
 }

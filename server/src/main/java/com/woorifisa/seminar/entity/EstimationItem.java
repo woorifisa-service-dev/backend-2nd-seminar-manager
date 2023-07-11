@@ -24,7 +24,7 @@ public class EstimationItem {
 	@Column(nullable = false, length = 500)
 	private String title;
 	
-	@Column(nullable = false, name="max_score")
+	@Column(name="max_score", nullable = false)
 	private Integer maxScore;
 	
 	@Column(nullable = false)

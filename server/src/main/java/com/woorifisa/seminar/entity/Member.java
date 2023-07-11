@@ -29,11 +29,11 @@ public class Member {
 	private Long id;
 	
 	@ManyToOne
-	@JoinColumn(nullable = false, name = "role_no")
+	@JoinColumn(name = "role_no", nullable = false)
 	private Role role;
 	
 	@ManyToOne
-	@JoinColumn(nullable = false, name = "class_no")
+	@JoinColumn(name = "class_no", nullable = false)
 	private Clazz clazz;
 	
 	@Column(nullable = false, length = 20)
@@ -48,7 +48,7 @@ public class Member {
 	@Column(nullable = false, length = 10)
 	private String name;
 	
-	@Column(nullable = false, name="created_at")
+	@Column(name="created_at", nullable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate createdAt;
 }
