@@ -51,4 +51,5 @@ public class Member {
 	@Column(name="created_at", nullable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate createdAt;
+
 }
