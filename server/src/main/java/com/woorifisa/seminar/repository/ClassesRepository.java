@@ -1,9 +1,12 @@
 package com.woorifisa.seminar.repository;
 
-import com.woorifisa.seminar.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.woorifisa.seminar.entity.Clazz;
+
 @Repository
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface ClassesRepository extends JpaRepository<Clazz, Long>{
+	
+
 }
