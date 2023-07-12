@@ -71,7 +71,7 @@ public class OtherEstimationService {
 
             items.add(new EstimationResponse(foundEi.getId(), foundEi.getTitle(), eReq.getScore()));
 
-            OtherEstimationItem oi = new OtherEstimationItem(foundEi, savedOe, eReq.getScore());
+            OtherEstimationItem oi = new OtherEstimationItem(foundEi, savedOe, eReq.getScore(), memberInfo.getRole());
             otherEstimationItemRepository.save(oi);
         }
 
