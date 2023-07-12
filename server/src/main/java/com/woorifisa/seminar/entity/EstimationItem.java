@@ -12,21 +12,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="estimation_items")
+@Table(name = "estimation_items")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EstimationItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="item_no")
+	@Column(name = "item_no")
 	private Long id;
-	
+
 	@Column(nullable = false, length = 500)
 	private String title;
-	
-	@Column(name="max_score", nullable = false)
+
+	@Column(name = "max_score", nullable = false)
 	private Integer maxScore;
-	
+
 	@Column(nullable = false)
 	private Integer order;
+
+	@Column(name = "is_other", nullable = false)
+	private Boolean isOther;
+
 }
