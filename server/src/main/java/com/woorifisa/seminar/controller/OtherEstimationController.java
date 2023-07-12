@@ -2,8 +2,8 @@ package com.woorifisa.seminar.controller;
 
 import com.woorifisa.seminar.dto.MemberInfo;
 import com.woorifisa.seminar.dto.common.CommonResponse;
+import com.woorifisa.seminar.dto.estimation.EstimationRequest;
 import com.woorifisa.seminar.dto.estimation.EstimationResponse;
-import com.woorifisa.seminar.dto.estimation.otherEstimation.request.OtherEstimationRequest;
 import com.woorifisa.seminar.service.OtherEstimationService;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -33,14 +33,14 @@ public class OtherEstimationController {
         return CommonResponse.create(HttpStatus.OK, estimationItems);
     }
 
-    @PostMapping("/{subjectNo}")
+    @PostMapping("/subjects/{subjectNo}")
     public ResponseEntity<CommonResponse<List<EstimationResponse>>> estimateOtherTeam(
         HttpSession session, @PathVariable Long subjectNo,
-        @Validated @RequestBody OtherEstimationRequest otherEstimationRequest) {
+        @Validated @RequestBody List<EstimationRequest> estimations) {
 
         MemberInfo member = (MemberInfo) session.getAttribute(MemberInfo.KEY);
         List<EstimationResponse> estimationResponses =
-            otherEstimationService.estimateOtherTeamByStudent(subjectNo, member, otherEstimationRequest);
+            otherEstimationService.estimateOtherTeamByStudent(subjectNo, member, estimations);
 
 
         return CommonResponse.create(HttpStatus.CREATED, estimationResponses);

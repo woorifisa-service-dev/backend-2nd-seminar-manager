@@ -13,7 +13,7 @@ public class EstimationResponse {
     private final Integer score;
 
     public static EstimationResponse from(EstimationItem item) {
-        return new EstimationResponse(item.getTitle(), item.getMaxScore());
+        return new EstimationResponse(item.getId(), item.getTitle(), item.getMaxScore());
     }
 
 }

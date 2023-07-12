@@ -5,7 +5,6 @@ import static java.util.stream.Collectors.toList;
 import com.woorifisa.seminar.dto.MemberInfo;
 import com.woorifisa.seminar.dto.estimation.EstimationRequest;
 import com.woorifisa.seminar.dto.estimation.EstimationResponse;
-import com.woorifisa.seminar.dto.estimation.otherEstimation.request.OtherEstimationRequest;
 import com.woorifisa.seminar.entity.EstimationItem;
 import com.woorifisa.seminar.entity.Member;
 import com.woorifisa.seminar.entity.OtherEstimation;
@@ -19,7 +18,6 @@ import com.woorifisa.seminar.repository.OtherEstimationRepository;
 import com.woorifisa.seminar.repository.SubjectRepository;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +35,7 @@ public class OtherEstimationService {
 
     public List<EstimationResponse> findEstimationItems() {
 
-        return estimationItemRepository.findEstimationItemsByEvaluationAreaOrderByOrder(EvaluationArea.참여도)
+        return estimationItemRepository.findEstimationItemsByEvaluationAreaOrderByOrder(EvaluationArea.발표력)
                                        .stream()
                                        .map(EstimationResponse::from)
                                        .collect(toList());
@@ -45,19 +43,18 @@ public class OtherEstimationService {
 
     @Transactional
     public List<EstimationResponse> estimateOtherTeamByStudent(final Long subjectId, final MemberInfo memberInfo,
-                                                               final OtherEstimationRequest otherEstimationRequest) {
+                                                               final List<EstimationRequest> estimations) {
 
         Member member = memberRepository.findById(memberInfo.getId()).orElseThrow();
         Subject subject = subjectRepository.findById(subjectId).orElseThrow();
         OtherEstimation savedOe = otherEstimationRepository.save(new OtherEstimation(member, subject));
 
-        List<EstimationRequest> estimations = otherEstimationRequest.getEstimationRequestList();
-
         List<EstimationResponse> items = new ArrayList<>();
         for (EstimationRequest eReq : estimations) {
             EstimationItem foundEi = estimationItemRepository.findById(eReq.getId())
                                                              .orElseThrow();
-            items.add(EstimationResponse.from(foundEi));
+
+            items.add(new EstimationResponse(foundEi.getId(), foundEi.getTitle(), eReq.getScore()));
 
             OtherEstimationItem oi = new OtherEstimationItem(foundEi, savedOe, eReq.getScore());
             otherEstimationItemRepository.save(oi);
