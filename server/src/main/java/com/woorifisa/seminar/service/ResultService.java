@@ -42,14 +42,19 @@ public class ResultService {
 
 		List<ResultInfoResponse> targetInfos = new ArrayList<>();
 		for (Subject ts : targetSubjectList) {
+			List<Long> targetmemberIdList = teamRepository.findBySubjectId(ts.getId()).stream().map(Team::getMember) // team
+					// ->
+					// team.getMember()
+					.map(Member::getId) // member -> member.getName()
+					.collect(toList());
 			List<String> targetmemberNameList = teamRepository.findBySubjectId(ts.getId()).stream().map(Team::getMember) // team
 																															// ->
 																															// team.getMember()
 					.map(Member::getName) // member -> member.getName()
 					.collect(toList());
 
-			targetInfos.add(ResultInfoResponse.from(targetClazz.getName(), targetSeminar.getName(), ts.getTitle(),
-					ts.getOrder(), targetmemberNameList));
+			targetInfos.add(ResultInfoResponse.from(targetClazz.getName(), targetSeminar.getName(), ts.getId(),
+					ts.getTitle(), ts.getOrder(), targetmemberIdList, targetmemberNameList));
 		}
 
 		return targetInfos;

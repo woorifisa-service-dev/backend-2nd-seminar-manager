@@ -16,11 +16,14 @@ public class ResultInfoResponse {
 	
 	private final String clazzName;
 	private final String seminarTypeName;
+	private final Long subjectId;
 	private final String subjectTitle;
 	private final Integer subjectOrder;
+	private final List<Long> memberIdList;
 	private final List<String> memberNameList;
 	
-	public static ResultInfoResponse from(String clazzName, String seminarTypeName, String subjectTitle, Integer subjectOrder, List<String> memberNameList) {
-		return new ResultInfoResponse(clazzName, seminarTypeName, subjectTitle, subjectOrder, memberNameList);
+	
+	public static ResultInfoResponse from(String clazzName, String seminarTypeName, Long subjectId, String subjectTitle, Integer subjectOrder, List<Long> memberIdList, List<String> memberNameList) {
+		return new ResultInfoResponse(clazzName, seminarTypeName, subjectId, subjectTitle, subjectOrder, memberIdList, memberNameList);
 	}
 }
