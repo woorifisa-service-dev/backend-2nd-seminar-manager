@@ -3,6 +3,7 @@ package com.woorifisa.seminar.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,7 +31,7 @@ public class Subject {
     @Column(nullable = false)
     private Integer order;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seminar_type_no", nullable = false)
     private SeminarType seminarType;
 

@@ -38,7 +38,7 @@ public class Team {
     @AllArgsConstructor
     @EqualsAndHashCode
     @Getter
-    static class Id implements Serializable {
+    public static class Id implements Serializable {
         private Long memberId;
         private Long subjectId;
     }
