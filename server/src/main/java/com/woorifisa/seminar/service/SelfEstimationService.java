@@ -1,27 +1,23 @@
 package com.woorifisa.seminar.service;
 
+import com.woorifisa.seminar.dto.estimation.EstimationResponse;
+import com.woorifisa.seminar.entity.constant.EvaluationArea;
+import com.woorifisa.seminar.repository.EstimationItemRepository;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Service;
-
-import com.woorifisa.seminar.dto.estimation.EstimationResponse;
-import com.woorifisa.seminar.entity.EstimationItem;
-import com.woorifisa.seminar.repository.EstimationRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class SelfEstimationService {
-	private final EstimationRepository estimationRepository;
-	
-	public List<EstimationResponse> findEstimationItemsByIsOtherIsFalseOrderByOrder() {
-		
-		List<EstimationItem> itemList= estimationRepository.findEstimationItemsByIsOtherIsFalseOrderByOrder();
-		
-		
-		return itemList.stream().map(EstimationResponse::from).collect(Collectors.toList());
-		
-	}
+    private final EstimationItemRepository estimationItemRepository;
+
+    public List<EstimationResponse> findEstimationItemsByIsOtherIsFalseOrderByOrder() {
+
+        return estimationItemRepository.findEstimationItemsByEvaluationAreaOrderByOrder(EvaluationArea.자체참여도)
+                                       .stream()
+                                       .map(EstimationResponse::from)
+                                       .collect(Collectors.toList());
+    }
 }
