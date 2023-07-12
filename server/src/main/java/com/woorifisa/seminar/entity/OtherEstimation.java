@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OtherEstimation {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="other_estimation_no")
@@ -30,4 +31,10 @@ public class OtherEstimation {
 	@ManyToOne
 	@JoinColumn(name = "subject_no", nullable = false)
 	private Subject subject;
+
+	public OtherEstimation(Member member, Subject subject) {
+		this.member = member;
+		this.subject = subject;
+	}
+
 }

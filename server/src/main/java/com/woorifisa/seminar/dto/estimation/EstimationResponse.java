@@ -8,8 +8,9 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class EstimationResponse {
 
+    private final Long id;
     private final String title;
-    private final Integer maxScore;
+    private final Integer score;
 
     public static EstimationResponse from(EstimationItem item) {
         return new EstimationResponse(item.getTitle(), item.getMaxScore());
