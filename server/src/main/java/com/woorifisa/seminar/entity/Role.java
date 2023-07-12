@@ -1,7 +1,10 @@
 package com.woorifisa.seminar.entity;
 
+import com.woorifisa.seminar.entity.constant.Type;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +26,7 @@ public class Role {
 	private Long id;
 	
 	@Column(nullable = false, length = 10)
-	private String name;
-	
-	
+	@Enumerated(value = EnumType.STRING)
+	private Type name;
+
 }

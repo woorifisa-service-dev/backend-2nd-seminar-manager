@@ -1,7 +1,10 @@
 package com.woorifisa.seminar.entity;
 
+import com.woorifisa.seminar.entity.constant.EvaluationArea;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,4 +32,9 @@ public class EstimationItem {
 	
 	@Column(nullable = false)
 	private Integer order;
+
+	@Column(name = "evaluation_area", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private EvaluationArea evaluationArea;
+
 }
