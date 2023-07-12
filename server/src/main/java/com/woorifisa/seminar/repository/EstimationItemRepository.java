@@ -9,4 +9,6 @@ public interface EstimationItemRepository extends JpaRepository<EstimationItem, 
 
     List<EstimationItem> findEstimationItemsByEvaluationAreaOrderByOrder(EvaluationArea evaluationArea);
 
+    List<EstimationItem> findEstimationItemsByEvaluationAreaInOrderByOrder(List<EvaluationArea> evaluationAreas);
+
 }

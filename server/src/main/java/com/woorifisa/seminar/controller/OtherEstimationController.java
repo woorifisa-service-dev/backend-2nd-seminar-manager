@@ -1,5 +1,7 @@
 package com.woorifisa.seminar.controller;
 
+import static org.springframework.http.HttpStatus.*;
+
 import com.woorifisa.seminar.dto.MemberInfo;
 import com.woorifisa.seminar.dto.common.CommonResponse;
 import com.woorifisa.seminar.dto.estimation.EstimationRequest;
@@ -26,11 +28,12 @@ public class OtherEstimationController {
     private final OtherEstimationService otherEstimationService;
 
     @GetMapping
-    public ResponseEntity<CommonResponse<List<EstimationResponse>>> retrieveOtherEstimationItems() {
+    public ResponseEntity<CommonResponse<List<EstimationResponse>>> retrieveOtherEstimationItems(HttpSession session) {
 
-        List<EstimationResponse> estimationItems = otherEstimationService.findEstimationItems();
+        MemberInfo member = (MemberInfo) session.getAttribute(MemberInfo.KEY);
+        List<EstimationResponse> estimationItems = otherEstimationService.findEstimationItems(member.getRole());
 
-        return CommonResponse.create(HttpStatus.OK, estimationItems);
+        return CommonResponse.create(OK, estimationItems);
     }
 
     @PostMapping("/subjects/{subjectNo}")
@@ -43,7 +46,7 @@ public class OtherEstimationController {
             otherEstimationService.estimateOtherTeamByStudent(subjectNo, member, estimations);
 
 
-        return CommonResponse.create(HttpStatus.CREATED, estimationResponses);
+        return CommonResponse.create(CREATED, estimationResponses);
     }
 
 }
