@@ -8,6 +8,8 @@ import com.woorifisa.seminar.entity.Member;
 import com.woorifisa.seminar.entity.SeminarType;
 import com.woorifisa.seminar.entity.Subject;
 import com.woorifisa.seminar.entity.Team;
+import com.woorifisa.seminar.exception.notfound.ClassNotFoundException;
+import com.woorifisa.seminar.exception.notfound.SeminarTypeNotFoundException;
 import com.woorifisa.seminar.repository.ClassesRepository;
 import com.woorifisa.seminar.repository.MemberRepository;
 import com.woorifisa.seminar.repository.SeminarTypeRepository;
@@ -15,7 +17,6 @@ import com.woorifisa.seminar.repository.SubjectRepository;
 import com.woorifisa.seminar.repository.TeamRepository;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,9 +32,9 @@ public class ResultService {
 
     public List<ResultInfoResponse> getAllResultInfo(Long classId, Long seminarTypeId) {
 
-        Clazz targetClazz = classesRepository.findById(classId).orElseThrow(NoSuchElementException::new);
+        Clazz targetClazz = classesRepository.findById(classId).orElseThrow(ClassNotFoundException::new);
         SeminarType targetSeminar = seminarTypeRepository.findById(seminarTypeId)
-                                                         .orElseThrow(NoSuchElementException::new);
+                                                         .orElseThrow(SeminarTypeNotFoundException::new);
 
         List<Subject> targetSubjectList = subjectRepository.findBySeminarTypeOrderByOrder(targetSeminar);
 
