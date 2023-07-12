@@ -34,5 +34,10 @@ public class TeamEstimation {
 
     @Column(name = "target_member_no", nullable = false)
     private Long targetMemberNo;
-    
+
+    public TeamEstimation(Subject subject, Member member, Long targetMemberNo) {
+        this.subject = subject;
+        this.member = member;
+        this.targetMemberNo = targetMemberNo;
+    }
 }

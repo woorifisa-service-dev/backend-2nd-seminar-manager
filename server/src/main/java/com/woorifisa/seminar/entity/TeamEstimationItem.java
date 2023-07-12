@@ -38,12 +38,19 @@ public class TeamEstimationItem {
     @Column
     private Integer score;
 
+    public TeamEstimationItem(EstimationItem estimationItem, TeamEstimation teamEstimation, Integer score) {
+        this.id = new Id(estimationItem.getId(), teamEstimation.getId());
+        this.estimationItem = estimationItem;
+        this.teamEstimation = teamEstimation;
+        this.score = score;
+    }
+
     @EqualsAndHashCode
     @NoArgsConstructor
     @AllArgsConstructor
     @Embeddable
     @Getter
-    static class Id implements Serializable {
+    public static class Id implements Serializable {
 
         private Long estimationItemId;
         private Long teamEstimationId;

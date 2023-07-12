@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,7 +30,7 @@ public class Member {
 	@Column(name="member_no")
 	private Long id;
 	
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "role_no", nullable = false)
 	private Role role;
 	
