@@ -44,18 +44,21 @@ public class SelfEstimationService {
     public List<EstimationResponse> estimateTeam(final Long targetMemberId, final Long subjectId,
                                                  final MemberInfo memberInfo,
                                                  final List<EstimationRequest> estimations) {
+
         Member member = memberRepository.findById(memberInfo.getId()).orElseThrow();
         Subject subject = subjectRepository.findById(subjectId).orElseThrow();
 
         TeamEstimation savedTeamEstimation =
             teamEstimationRepository.save(new TeamEstimation(subject, member, targetMemberId));
+
         List<EstimationResponse> result = new ArrayList<>();
 
         for (EstimationRequest el : estimations) {
             EstimationItem estimationItem = estimationItemRepository.findById(el.getId()).orElseThrow();
             result.add(new EstimationResponse(estimationItem.getId(), estimationItem.getTitle(), el.getScore()));
 
-            teamEstimationItemRepository.save(new TeamEstimationItem(estimationItem, savedTeamEstimation, el.getScore()));
+            teamEstimationItemRepository.save(
+                new TeamEstimationItem(estimationItem, savedTeamEstimation, el.getScore()));
         }
 
         return result;
