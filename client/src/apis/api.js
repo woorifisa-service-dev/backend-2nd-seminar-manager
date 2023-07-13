@@ -36,6 +36,7 @@ export const postLogin = async (username, password) => {
       username,
       password
     })
+    .then((v) => v.data.data)
     .catch((e) => console.error(e));
 };
 

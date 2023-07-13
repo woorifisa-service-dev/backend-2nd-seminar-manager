@@ -22,9 +22,10 @@ const state = history.state;
 
 const login = async () => {
   try {
-    await postLogin(userid.value, password.value);
+    const member = await postLogin(userid.value, password.value);
+    sessionStorage.setItem('member', JSON.stringify(member));
     state.login = false;
-    goPage('/');
+    // goPage('/');
   } catch (e) {
     console.error(e);
   }
