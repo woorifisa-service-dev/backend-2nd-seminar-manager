@@ -4,7 +4,7 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.toList;
 
 import com.woorifisa.seminar.dto.result.MemberIdAndName;
-import com.woorifisa.seminar.dto.result.ResultInfoResponse2;
+import com.woorifisa.seminar.dto.result.ResultInfoResponse;
 import com.woorifisa.seminar.entity.Subject;
 import com.woorifisa.seminar.entity.Team;
 import com.woorifisa.seminar.repository.SubjectRepository;
@@ -25,14 +25,14 @@ public class SubjectService {
     private final SubjectRepository subjectRepository;
     private final TeamRepository teamRepository;
 
-    public List<ResultInfoResponse2> retrieveTop3Information(final Long classId, final Long seminarTypeId) {
+    public List<ResultInfoResponse> retrieveTop3Information(final Long classId, final Long seminarTypeId) {
         List<Long> top3Ids = subjectRepository.findTop3Id(classId, seminarTypeId, PageRequest.of(0, 3));
 
         List<Team> teams = teamRepository.findTop3Teams(top3Ids);
         Map<String, List<Team>> groupedMemberBySubjectName = teams.stream()
                                                .collect(groupingBy(t -> t.getSubject().getTitle()));
 
-        List<ResultInfoResponse2> respList = new ArrayList<>();
+        List<ResultInfoResponse> respList = new ArrayList<>();
 
         for (String key : groupedMemberBySubjectName.keySet()) {
 
@@ -44,7 +44,7 @@ public class SubjectService {
                                                       .map(m -> new MemberIdAndName(m.getId(), m.getName()))
                                                       .collect(toList());
 
-            ResultInfoResponse2 resp = ResultInfoResponse2.builder()
+            ResultInfoResponse resp = ResultInfoResponse.builder()
                                                           .clazzName(t.getMember().getClazz().getName())
                                                           .seminarTypeName(key)
                                                           .subjectId(s.getId())

@@ -3,7 +3,7 @@ package com.woorifisa.seminar.controller;
 import static org.springframework.http.HttpStatus.*;
 
 import com.woorifisa.seminar.dto.common.CommonResponse;
-import com.woorifisa.seminar.dto.result.ResultInfoResponse2;
+import com.woorifisa.seminar.dto.result.ResultInfoResponse;
 import com.woorifisa.seminar.service.SubjectService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +21,8 @@ public class SubjectController {
     private final SubjectService subjectService;
 
     @GetMapping
-    public ResponseEntity<CommonResponse<List<ResultInfoResponse2>>> test(@PathVariable Long classId, @PathVariable Long seminarTypeId) {
-        List<ResultInfoResponse2> top3Result = subjectService.retrieveTop3Information(classId, seminarTypeId);
+    public ResponseEntity<CommonResponse<List<ResultInfoResponse>>> test(@PathVariable Long classId, @PathVariable Long seminarTypeId) {
+        List<ResultInfoResponse> top3Result = subjectService.retrieveTop3Information(classId, seminarTypeId);
         return CommonResponse.create(OK, top3Result);
     }
 
