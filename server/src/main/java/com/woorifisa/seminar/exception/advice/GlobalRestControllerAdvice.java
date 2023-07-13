@@ -36,7 +36,8 @@ public class GlobalRestControllerAdvice {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGlobalServerException(Exception e) {
-        return ErrorResponse.fail(SERVER_EXCEPTION);
+        e.printStackTrace();
+    	return ErrorResponse.fail(SERVER_EXCEPTION);
     }
 
 }
