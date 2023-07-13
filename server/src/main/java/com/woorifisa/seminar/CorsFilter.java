@@ -15,9 +15,17 @@ public class CorsFilter implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000", "http://localhost:5173") // 허용할 출처
-                .allowedMethods(GET.name(), POST.name(), PUT.name(), DELETE.name()) // 허용할 HTTP method
-                .allowCredentials(true) // 쿠키 인증 요청 허용
+                .allowedOrigins(
+                    "http://localhost:3000",
+                    "http://localhost:5173",
+                    "http://127.0.0.1:5173",
+                    "http://192.168.0.170:5173",
+                    "http://192.168.0.188:5173",
+                    "http://118.131.63.237:5173"
+                ) // 허용할 출처
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*")
+                .allowCredentials(true)
                 .maxAge(3000);
     }
 

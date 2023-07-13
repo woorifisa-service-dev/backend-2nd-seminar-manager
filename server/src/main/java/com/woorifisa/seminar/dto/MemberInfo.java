@@ -22,8 +22,8 @@ public class MemberInfo {
     private final Type role;
 
     public static MemberInfo getDummy() {
-        // return new MemberInfo(2L, "sunjoo", "양선주", "sunjoo@gmail.com", Type.STUDENT);
-        return new MemberInfo(21L, "minsung", "정민성", "minsung@gmail.com", Type.STUDENT);
+        return new MemberInfo(2L, "sunjoo", "양선주", "sunjoo@gmail.com", Type.STUDENT);
+        // return new MemberInfo(21L, "minsung", "정민성", "minsung@gmail.com", Type.STUDENT);
     }
 
     public static MemberInfo getDummyMentor() {
