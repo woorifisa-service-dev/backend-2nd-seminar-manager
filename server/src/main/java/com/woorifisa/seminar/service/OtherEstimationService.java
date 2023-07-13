@@ -70,6 +70,7 @@ public class OtherEstimationService {
         OtherEstimation savedOe = otherEstimationRepository.save(new OtherEstimation(member, subject));
 
         List<EstimationResponse> items = new ArrayList<>();
+        List<OtherEstimationItem> insertItems = new ArrayList<>();
         for (EstimationRequest eReq : estimations) {
             EstimationItem foundEi = estimationItemRepository.findById(eReq.getId())
                                                              .orElseThrow(EstimationItemNotFoundException::new);
@@ -77,8 +78,10 @@ public class OtherEstimationService {
             items.add(new EstimationResponse(foundEi.getId(), foundEi.getTitle(), eReq.getScore()));
 
             OtherEstimationItem oi = new OtherEstimationItem(foundEi, savedOe, eReq.getScore(), memberInfo.getRole());
-            otherEstimationItemRepository.save(oi);
+            insertItems.add(oi);
         }
+
+        otherEstimationItemRepository.saveAll(insertItems);
 
         return items;
     }

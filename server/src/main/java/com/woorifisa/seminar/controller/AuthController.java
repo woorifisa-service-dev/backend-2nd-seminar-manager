@@ -7,6 +7,7 @@ import com.woorifisa.seminar.dto.MemberInfo;
 import com.woorifisa.seminar.dto.auth.LoginRequest;
 import com.woorifisa.seminar.dto.common.CommonResponse;
 import com.woorifisa.seminar.service.AuthService;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +27,10 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<CommonResponse<MemberInfo>> login(
-        @RequestBody @Validated LoginRequest loginRequest, HttpSession session) {
+        @RequestBody @Validated LoginRequest loginRequest, HttpSession session, HttpServletResponse resp) {
 
         MemberInfo loginMember = authService.login(loginRequest);
+
         session.setAttribute(MemberInfo.KEY, loginMember);
         System.out.println("LOGIN SUCCESS");
         return CommonResponse.create(OK, loginMember);

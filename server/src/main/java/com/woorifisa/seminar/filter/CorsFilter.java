@@ -1,4 +1,4 @@
-package com.woorifisa.seminar;
+package com.woorifisa.seminar.filter;
 
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
@@ -24,7 +24,7 @@ public class CorsFilter implements WebMvcConfigurer {
                     "http://118.131.63.237:5173"
                 ) // 허용할 출처
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("*")
+                // .allowedHeaders("*")
                 .allowCredentials(true)
                 .maxAge(3000);
     }
