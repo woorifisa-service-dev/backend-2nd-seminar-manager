@@ -2,7 +2,7 @@
   <div class="container">
     <div class="item">
       <div>TEAM: {{ props.team.subjectOrder }} 팀</div>
-      <div>주제: {{ props.team.subjectTitle }}</div>
+      <div>주제: {{ props.team.seminarTypeName }}</div>
       <div>팀원: {{ printMemberList }}</div>
     </div>
   </div>
