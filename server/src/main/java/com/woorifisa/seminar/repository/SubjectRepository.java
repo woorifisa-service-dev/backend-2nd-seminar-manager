@@ -38,18 +38,17 @@ public interface SubjectRepository extends JpaRepository<Subject, Long> {
         "SELECT s.id " +
 
             "FROM " +
-            "OtherEstimationItem oei" +
+            "OtherEstimationItem oei " +
             " JOIN oei.otherEstimation oe " +
             " JOIN oei.otherEstimation.subject s " +
             " JOIN oei.estimationItem ei " +
             " JOIN s.seminarType.clazz c " +
 
-            "WHERE" +
+            "WHERE " +
             " c.id = :classId" +
             " AND s.seminarType.id = :seminarTypeId " +
 
-            "GROUP BY oe.id " +
-            "ORDER BY SUM(oei.score) DESC"
+            "GROUP BY s.id "
     )
     List<Long> findTop3Id(Long classId, Long seminarTypeId, Pageable pageable);
 

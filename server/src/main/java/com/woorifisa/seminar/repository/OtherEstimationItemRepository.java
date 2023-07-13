@@ -26,7 +26,6 @@ public interface OtherEstimationItemRepository extends JpaRepository<OtherEstima
 		        " AND oe.id IN :targetOtherEstimation " +
 
 		        "GROUP BY oei.roleName"
-		    
 		)
 		Long targetScore(@Param("targetOtherEstimation") List<Long> targetOtherEstimation, @Param("role") Type role);
 }

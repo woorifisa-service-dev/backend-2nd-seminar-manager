@@ -26,7 +26,7 @@ public interface TeamRepository extends JpaRepository<Team, Team.Id> {
             " JOIN FETCH t.member m " +
             " JOIN FETCH m.clazz " +
             " JOIN FETCH m.role " +
-            "WHERE s.id IN :subjectIds "
+            "WHERE s.id IN :subjectIds"
     )
     List<Team> findTop3Teams(List<Long> subjectIds);
 

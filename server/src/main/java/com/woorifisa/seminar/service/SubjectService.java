@@ -10,6 +10,7 @@ import com.woorifisa.seminar.entity.Team;
 import com.woorifisa.seminar.repository.SubjectRepository;
 import com.woorifisa.seminar.repository.TeamRepository;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -56,6 +57,7 @@ public class SubjectService {
             respList.add(resp);
         }
 
+        respList.sort(Comparator.comparingInt(ResultInfoResponse::getSubjectOrder));
         return respList;
     }
 
