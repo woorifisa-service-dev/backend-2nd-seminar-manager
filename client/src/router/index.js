@@ -28,6 +28,11 @@ const router = createRouter({
       path: '/estimation',
       name: 'estimation',
       component: () => import('../views/EstimationView.vue')
+    },
+    {
+      path: '/estimation/list',
+      name: 'estimation list',
+      component: () => import('../views/EstimationTeamListView.vue')
     }
   ]
 });
