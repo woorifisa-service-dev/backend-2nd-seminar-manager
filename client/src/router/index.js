@@ -10,9 +10,24 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/AboutView.vue')
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/LoginView.vue')
+    },
+    {
+      path: '/estimation/select',
+      name: 'estimation select',
+      component: () => import('../views/EstimationSelectView.vue')
+    },
+    {
+      path: '/result',
+      name: 'result',
+      component: () => import('../views/ResultView.vue')
+    },
+    {
+      path: '/estimation',
+      name: 'estimation',
+      component: () => import('../views/EstimationView.vue')
     }
   ]
 });
