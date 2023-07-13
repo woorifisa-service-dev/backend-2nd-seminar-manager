@@ -20,7 +20,12 @@
       </select>
     </div>
     <div>
-      <button @click="() => goPage(`/estimation`)">평가하러 가기</button>
+      <button
+        :disabled="selectedClass === 'none' || selectedType === 'none'"
+        @click="() => goPage(`/estimation`)"
+      >
+        평가하러 가기
+      </button>
     </div>
   </div>
 </template>
