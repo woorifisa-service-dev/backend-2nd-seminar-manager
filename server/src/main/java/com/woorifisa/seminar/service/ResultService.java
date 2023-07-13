@@ -77,7 +77,28 @@ public class ResultService {
 
 		return targetInfos;
 	}
+	
+	public ResultScoreResponse getScoreByUser(Long sessionUserId, Long subjectId) {
+		Subject targetSubject = subjectRepository.findById(subjectId).orElseThrow(NoSuchElementException::new);
+
+		List<Long> targetOtherEstimation = otherEstimationRepository.findBySubject(targetSubject).stream()
+				.map(OtherEstimation::getId).collect(Collectors.toList());
+
+		Long targetTeacherScore = otherEstimationItemRepository.targetScore(targetOtherEstimation, Type.TEACHER);
+		Long targetMentorScore = otherEstimationItemRepository.targetScore(targetOtherEstimation, Type.MENTOR);
+		Long targetStudentScore = otherEstimationItemRepository.targetScore(targetOtherEstimation, Type.STUDENT);
+
+		Long targetTotalScore = targetTeacherScore + targetMentorScore + targetStudentScore;
+		//내부 평가
+		List<Long> targeteamEstimation = teamEstimationRepository.findByIdAndSubjectId(sessionUserId, subjectId);
+
+		List<Long> targetTeamMemberScore = teamEstimationItemRepository.targetScore(targeteamEstimation);
+
+		Long targetTeamMemberTotalScore = targetTeamMemberScore.stream().mapToLong(Long::longValue).sum();
+		Double targetTeamMemberAvgScore = (double) (targetTeamMemberTotalScore / targeteamEstimation.size());
 
 
+		return ResultScoreResponse.from(targetTeacherScore, targetMentorScore, targetStudentScore, targetTotalScore, targetTeamMemberTotalScore, targetTeamMemberAvgScore);
+	}
 
 }
