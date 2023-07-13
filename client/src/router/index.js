@@ -55,6 +55,11 @@ const router = createRouter({
       path: '/estimation/list',
       name: 'estimation list',
       component: () => import('../views/EstimationTeamListView.vue')
+    },
+    {
+      path: '/detail',
+      name: 'DetailResult',
+      component: () => import('../views/nested/DetailResultView.vue')
     }
   ]
 });

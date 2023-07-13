@@ -43,3 +43,25 @@ export const postLogin = async (username, password) => {
 export const logout = async () => {
   return await axios.get(BASE_URL + '/api/auth/logout').catch((e) => console.error(e));
 };
+
+export const getAllTeam = async (classId, seminarTypeId) => {
+  const res = await axios.get(
+    BASE_URL + `/api/estimation/result/classes/${classId}/seminars/${seminarTypeId}`
+  );
+  return res.data;
+};
+
+export const getTop3 = async (classId, seminarTypeId) => {
+  const res = await axios.get(BASE_URL + `/api/classes/${classId}/seminars/${seminarTypeId}/top3`);
+  return res.data;
+};
+
+export const getDetailTeam = async (classId, seminarTypeId, subjectId) => {
+  const res = await axios.get(
+    BASE_URL +
+      `/api/estimation/result/score/classes/${classId}/seminars/${seminarTypeId}/subjects/${subjectId}`
+  );
+  return res.data;
+};
+
+// /score/classes/{classId}/seminars/{seminarTypeId}/subjects/{subjectId}
