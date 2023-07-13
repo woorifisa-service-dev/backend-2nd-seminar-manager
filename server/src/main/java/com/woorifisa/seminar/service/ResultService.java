@@ -2,6 +2,8 @@ package com.woorifisa.seminar.service;
 
 import static java.util.stream.Collectors.toList;
 
+import com.woorifisa.seminar.dto.result.MemberIdAndName;
+import com.woorifisa.seminar.dto.result.ResultInfoResponse;
 import com.woorifisa.seminar.dto.result.ResultInfoResponse;
 import com.woorifisa.seminar.dto.result.ResultScoreResponse;
 import com.woorifisa.seminar.entity.Clazz;
@@ -49,7 +51,7 @@ public class ResultService {
 	private final OtherEstimationItemRepository otherEstimationItemRepository;
 	private final TeamEstimationRepository teamEstimationRepository;
 	private final TeamEstimationItemRepository teamEstimationItemRepository;
-	
+
 	public List<ResultInfoResponse> getAllResultInfo(Long classId, Long seminarTypeId) {
 
 		Clazz targetClazz = classesRepository.findById(classId).orElseThrow(ClassNotFoundException::new);
@@ -60,24 +62,21 @@ public class ResultService {
 
 		List<ResultInfoResponse> targetInfos = new ArrayList<>();
 		for (Subject ts : targetSubjectList) {
-			List<Long> targetmemberIdList = teamRepository.findBySubjectId(ts.getId()).stream().map(Team::getMember) // team
-					// ->
-					// team.getMember()
-					.map(Member::getId) // member -> member.getName()
-					.collect(toList());
-			List<String> targetmemberNameList = teamRepository.findBySubjectId(ts.getId()).stream().map(Team::getMember) // team
-																															// ->
-																															// team.getMember()
-					.map(Member::getName) // member -> member.getName()
+			List<MemberIdAndName> memberList = teamRepository.findBySubjectId(ts.getId()).stream().map(Team::getMember) // ->
+																														// team.getMember()
+					.map(member -> new MemberIdAndName(member.getId(), member.getName()))
+					// .map(Member::getName) // member -> member.getName()
 					.collect(toList());
 
-			targetInfos.add(ResultInfoResponse.from(targetClazz.getName(), targetSeminar.getName(), ts.getId(),
-					ts.getTitle(), ts.getOrder(), targetmemberIdList, targetmemberNameList));
+			targetInfos.add(ResultInfoResponse.builder().clazzName(targetClazz.getName())
+					.seminarTypeName(targetSeminar.getName()).subjectId(ts.getId()).subjectTitle(ts.getTitle())
+					.subjectOrder(ts.getOrder()).memberList(memberList).build());
+
 		}
 
 		return targetInfos;
 	}
-	
+
 	public ResultScoreResponse getScoreByUser(Long sessionUserId, Long subjectId) {
 		Subject targetSubject = subjectRepository.findById(subjectId).orElseThrow(NoSuchElementException::new);
 
@@ -89,7 +88,7 @@ public class ResultService {
 		Long targetStudentScore = otherEstimationItemRepository.targetScore(targetOtherEstimation, Type.STUDENT);
 
 		Long targetTotalScore = targetTeacherScore + targetMentorScore + targetStudentScore;
-		//내부 평가
+		// 내부 평가
 		List<Long> targeteamEstimation = teamEstimationRepository.findByIdAndSubjectId(sessionUserId, subjectId);
 
 		List<Long> targetTeamMemberScore = teamEstimationItemRepository.targetScore(targeteamEstimation);
@@ -97,8 +96,8 @@ public class ResultService {
 		Long targetTeamMemberTotalScore = targetTeamMemberScore.stream().mapToLong(Long::longValue).sum();
 		Double targetTeamMemberAvgScore = (double) (targetTeamMemberTotalScore / targeteamEstimation.size());
 
-
-		return ResultScoreResponse.from(targetTeacherScore, targetMentorScore, targetStudentScore, targetTotalScore, targetTeamMemberTotalScore, targetTeamMemberAvgScore);
+		return ResultScoreResponse.from(targetTeacherScore, targetMentorScore, targetStudentScore, targetTotalScore,
+				targetTeamMemberTotalScore, targetTeamMemberAvgScore);
 	}
 
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.woorifisa.seminar.dto.MemberInfo;
 import com.woorifisa.seminar.dto.common.CommonResponse;
 import com.woorifisa.seminar.dto.result.ResultInfoResponse;
+import com.woorifisa.seminar.dto.result.ResultInfoResponse;
 import com.woorifisa.seminar.dto.result.ResultScoreResponse;
 import com.woorifisa.seminar.service.ResultService;
 
@@ -39,6 +40,6 @@ public class ResultController {
 	@GetMapping(path="/score/{classId}/{seminarTypeId}/{subjectId}")
 	public ResponseEntity<CommonResponse<ResultScoreResponse>> getResultScore(HttpSession session, @PathVariable Long classId, @PathVariable Long seminarTypeId, @PathVariable Long subjectId){
 		MemberInfo member = (MemberInfo) session.getAttribute(MemberInfo.KEY);
-		return CommonResponse.create(HttpStatus.OK, resultService.getScoreByUser(member.getId(), classId, seminarTypeId, subjectId));
+		return CommonResponse.create(HttpStatus.OK, resultService.getScoreByUser(member.getId(), subjectId));
 	}
 }
