@@ -23,6 +23,8 @@ public class DummyLoginAop {
             ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 
         request.getSession().setAttribute(MemberInfo.KEY, MemberInfo.getDummy());
+        request.getSession().setAttribute("MENTOR", MemberInfo.getDummyMentor());
+        request.getSession().setAttribute("TEACHER", MemberInfo.getDummyTeacher());
 
         return pjp.proceed();
     }

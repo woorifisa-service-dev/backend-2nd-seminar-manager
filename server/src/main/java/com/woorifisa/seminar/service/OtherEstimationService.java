@@ -61,8 +61,8 @@ public class OtherEstimationService {
     }
 
     @Transactional
-    public List<EstimationResponse> estimateOtherTeamByStudent(final Long subjectId, final MemberInfo memberInfo,
-                                                               final List<EstimationRequest> estimations) {
+    public List<EstimationResponse> estimateOtherTeam(final Long subjectId, final MemberInfo memberInfo,
+                                                      final List<EstimationRequest> estimations) {
 
         Member member = memberRepository.findById(memberInfo.getId()).orElseThrow(MemberNotFoundException::new);
         Subject subject = subjectRepository.findById(subjectId).orElseThrow(SubjectNotFoundException::new);

@@ -22,7 +22,16 @@ public class MemberInfo {
     private final Type role;
 
     public static MemberInfo getDummy() {
-        return new MemberInfo(2L, "sunjoo", "양선주", "sunjoo@gmail.com", Type.STUDENT);
+        // return new MemberInfo(2L, "sunjoo", "양선주", "sunjoo@gmail.com", Type.STUDENT);
+        return new MemberInfo(21L, "minsung", "정민성", "minsung@gmail.com", Type.STUDENT);
+    }
+
+    public static MemberInfo getDummyMentor() {
+        return new MemberInfo(29L, "mentor", "멘토", "mentor@gmail.com", Type.MENTOR);
+    }
+
+    public static MemberInfo getDummyTeacher() {
+        return new MemberInfo(28L, "jungho", "유정호", "jungho@gmail.com", Type.TEACHER);
     }
 
     public static MemberInfo from(Member member) {

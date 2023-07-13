@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AccessLevel;
@@ -23,6 +24,7 @@ import lombok.NoArgsConstructor;
 @Table(name="members")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 public class Member {
 	
 	@Id
