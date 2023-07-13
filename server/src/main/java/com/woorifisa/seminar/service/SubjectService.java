@@ -1,15 +1,17 @@
 package com.woorifisa.seminar.service;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
-import com.woorifisa.seminar.dto.subject.Top3Result;
-import com.woorifisa.seminar.entity.Member;
+import com.woorifisa.seminar.dto.result.MemberIdAndName;
+import com.woorifisa.seminar.dto.result.ResultInfoResponse2;
+import com.woorifisa.seminar.entity.Subject;
 import com.woorifisa.seminar.entity.Team;
-import com.woorifisa.seminar.repository.MemberRepository;
 import com.woorifisa.seminar.repository.SubjectRepository;
 import com.woorifisa.seminar.repository.TeamRepository;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -23,16 +25,38 @@ public class SubjectService {
     private final SubjectRepository subjectRepository;
     private final TeamRepository teamRepository;
 
-    public void test(final Long classId, final Long seminarTypeId) {
-        List<Top3Result> top3 = subjectRepository.findTop3(classId, seminarTypeId, PageRequest.of(0, 3));
-        List<Team> teams = teamRepository.findMemberBySubject(top3.stream().map(Top3Result::getSubjectId).collect(toList()));
+    public List<ResultInfoResponse2> retrieveTop3Information(final Long classId, final Long seminarTypeId) {
+        List<Long> top3Ids = subjectRepository.findTop3Id(classId, seminarTypeId, PageRequest.of(0, 3));
 
-        // teams.stream()
-        //          .g
-        //
-        // top3.forEach(System.out::println);
-        // members.forEach(System.out::println);
+        List<Team> teams = teamRepository.findTop3Teams(top3Ids);
+        Map<String, List<Team>> groupedMemberBySubjectName = teams.stream()
+                                               .collect(groupingBy(t -> t.getSubject().getTitle()));
 
+        List<ResultInfoResponse2> respList = new ArrayList<>();
+
+        for (String key : groupedMemberBySubjectName.keySet()) {
+
+            Team t = groupedMemberBySubjectName.get(key).get(0);
+            Subject s = t.getSubject();
+            List<MemberIdAndName> memberList = groupedMemberBySubjectName.get(key)
+                                                      .stream()
+                                                      .map(Team::getMember)
+                                                      .map(m -> new MemberIdAndName(m.getId(), m.getName()))
+                                                      .collect(toList());
+
+            ResultInfoResponse2 resp = ResultInfoResponse2.builder()
+                                                          .clazzName(t.getMember().getClazz().getName())
+                                                          .seminarTypeName(key)
+                                                          .subjectId(s.getId())
+                                                          .subjectTitle(s.getSeminarType().getName())
+                                                          .subjectOrder(s.getOrder())
+                                                          .memberList(memberList)
+                                                          .build();
+
+            respList.add(resp);
+        }
+
+        return respList;
     }
 
 }

@@ -18,4 +18,16 @@ public interface TeamRepository extends JpaRepository<Team, Team.Id> {
     )
     List<Team> findMemberBySubject(List<Long> subjectIds);
 
+    @Query(
+        "SELECT t " +
+            "FROM Team t " +
+            " JOIN FETCH t.subject s " +
+            " JOIN FETCH s.seminarType st " +
+            " JOIN FETCH t.member m " +
+            " JOIN FETCH m.clazz " +
+            " JOIN FETCH m.role " +
+            "WHERE s.id IN :subjectIds "
+    )
+    List<Team> findTop3Teams(List<Long> subjectIds);
+
 }
