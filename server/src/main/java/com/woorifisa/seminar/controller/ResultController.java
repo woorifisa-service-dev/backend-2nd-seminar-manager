@@ -34,7 +34,7 @@ public class ResultController {
 //		
 //	}
 //	
-    @GetMapping(path = "/score/{classId}/{seminarTypeId}/seminars/{subjectId}")
+    @GetMapping(path = "/score/classes/{classId}/seminars/{seminarTypeId}/subjects/{subjectId}")
     public ResponseEntity<CommonResponse<ResultScoreResponse>> getResultScore(HttpSession session,
                                                                               @PathVariable Long classId,
                                                                               @PathVariable Long seminarTypeId,
