@@ -34,8 +34,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { goPage } from '../utils/pages.js';
+import { getclassNameAndSemiarType } from '../apis/api';
 
 const classTypes = ref(['service', 'engineering', 'ai']);
 const seminarTypes = ref({
@@ -45,6 +46,10 @@ const seminarTypes = ref({
 });
 const selectedClass = ref('none');
 const selectedType = ref('none');
+
+watch(() => {
+  getclassNameAndSemiarType();
+});
 </script>
 
 <style scoped>
