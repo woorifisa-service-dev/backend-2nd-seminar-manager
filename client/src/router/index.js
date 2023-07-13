@@ -22,7 +22,21 @@ const router = createRouter({
     {
       path: '/result',
       name: 'result',
-      component: () => import('../views/ResultView.vue')
+      component: () => import('../views/ResultView.vue'),
+      children: [
+        {
+          path: 'fe',
+          component: () => import('../views/nested/FeResultView.vue')
+        },
+        {
+          path: 'be',
+          component: () => import('../views/nested/BeResultView.vue')
+        },
+        {
+          path: 'cloud',
+          component: () => import('../views/nested/CloudResultView.vue')
+        }
+      ]
     },
     {
       path: '/estimation',
