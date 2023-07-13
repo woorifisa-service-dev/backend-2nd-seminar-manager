@@ -4,44 +4,58 @@
     <div class="title">
       <h2>{{ clazz }} | {{ type }}</h2>
     </div>
-    <form action="">
-      <div v-for="(item, index) in itmes" :key="item.name">
-        <label :for="itmes.name">{{ item.text }}</label>
+    <LoadingIcon v-show="complete" />
+    <form>
+      <div v-for="(item, index) in itmes" :key="item.id">
+        <label :for="item.id">{{ item.title }}</label>
         <input
           type="range"
-          :name="item.name"
-          :id="item.name"
+          :name="item.id"
+          :id="item.id"
           v-model="score[index]"
           min="0"
-          max="10"
+          :max="item.score"
           step="1"
         />
         <span>{{ score[index] }}</span>
       </div>
-      <button type="submit">제출하기</button>
+      <button type="button" @click="submit">제출하기</button>
     </form>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { getEstimationList, postEstimationSubmit } from '../apis/api.js';
+import LoadingIcon from '../components/LoadingIcon.vue';
+import router from '../router/index.js';
 
-const { clazz, type, order } = history.state;
-const itmes = ref([
-  {
-    text: 'no 1',
-    name: 1
-  },
-  {
-    text: 'no 2',
-    name: 3
-  },
-  {
-    text: 'no 3',
-    name: 3
-  }
-]);
-const score = ref(new Array(itmes.value.length).fill().map(() => 0));
+const { clazz, type, id } = history.state;
+const complete = ref(true);
+const itmes = ref([]);
+const score = ref(0);
+const submit = async () => {
+  // id: 항목마다 id
+  // socre: 항목별 점수
+  const body = [];
+  itmes.value.forEach((v, index) => {
+    body.push({
+      id: v.id,
+      score: +score.value[index]
+    });
+  });
+
+  await postEstimationSubmit(body, id);
+
+  router.push('/');
+};
+
+watch(async () => {
+  const tmp = await getEstimationList();
+  itmes.value = tmp;
+  score.value = new Array(itmes.value.length).fill().map(() => 0);
+  complete.value = false;
+});
 </script>
 
 <style scoped>
@@ -50,7 +64,7 @@ const score = ref(new Array(itmes.value.length).fill().map(() => 0));
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  /* height: 100vh; */
   width: 100%;
 }
 .estimation > h1 {
@@ -118,5 +132,6 @@ button {
   padding: 20px 40px;
   border-radius: 10px;
   margin: auto;
+  cursor: pointer;
 }
 </style>

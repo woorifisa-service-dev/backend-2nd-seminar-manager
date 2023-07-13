@@ -14,6 +14,7 @@
               <td>teams</td>
             </tr>
           </thead>
+          <LoadingIcon v-show="complete" />
           <tbody>
             <tr v-for="team in teamList" :key="team.order" @click="() => goEstimation(team)">
               <td>{{ team.order }}</td>
@@ -28,29 +29,52 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { goPage } from '../utils/pages';
+import { getSubjectWithTeamList } from '../apis/api.js';
+import LoadingIcon from '../components/LoadingIcon.vue';
 
 const { clazz, type } = history.state;
-const teamList = ref([
-  { order: 1, title: 'title1', teams: ['1', '2', '3'] },
-  { order: 2, title: 'title2', teams: ['12', '22', '32'] },
-  { order: 3, title: 'title3', teams: ['13', '23', '33'] },
-  { order: 4, title: 'title3', teams: ['13', '23', '33'] },
-  { order: 5, title: 'title3', teams: ['13', '23', '33'] },
-  { order: 6, title: 'title3', teams: ['13', '23', '33'] },
-  { order: 7, title: 'title3', teams: ['13', '23', '33'] }
-]);
+const complete = ref(true);
+console.log(clazz, type);
+
+// const teamList = ref([
+//   { order: 1, title: 'title1', teams: ['1', '2', '3'] },
+//   { order: 2, title: 'title2', teams: ['12', '22', '32'] },
+//   { order: 3, title: 'title3', teams: ['13', '23', '33'] },
+//   { order: 4, title: 'title3', teams: ['13', '23', '33'] },
+//   { order: 5, title: 'title3', teams: ['13', '23', '33'] },
+//   { order: 6, title: 'title3', teams: ['13', '23', '33'] },
+//   { order: 7, title: 'title3', teams: ['13', '23', '33'] }
+// ]);
+const teamList = ref([]);
 const goEstimation = (team) => {
   goPage({
     name: 'estimation',
     state: {
       clazz,
       type,
-      order: team.order
+      id: team.id
     }
   });
 };
+
+watch(async () => {
+  const list = await getSubjectWithTeamList(clazz, type);
+
+  console.log(list);
+  const subjectInfoes = [];
+  list?.forEach((a) => {
+    subjectInfoes.push({
+      order: a.subjectOrder,
+      title: a.subjectTitle,
+      teams: a.memberList.map((m) => m.name),
+      id: a.subjectId
+    });
+  });
+  teamList.value = subjectInfoes;
+  complete.value = false;
+});
 </script>
 
 <style scoped>
@@ -87,7 +111,7 @@ table {
 thead {
   width: 100%;
   border-bottom: 2px solid black;
-  background: rgb(54, 54, 209);
+  background: var(--blue);
   color: white;
 }
 table td {
@@ -98,6 +122,6 @@ tbody tr {
   cursor: pointer;
 }
 tbody tr:nth-child(2n) {
-  background: lightgray;
+  background: rgb(246, 246, 246);
 }
 </style>
