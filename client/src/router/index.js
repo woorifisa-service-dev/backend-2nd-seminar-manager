@@ -25,15 +25,23 @@ const router = createRouter({
       component: () => import('../views/ResultView.vue'),
       children: [
         {
+          path: '',
+          name: 'ResultHome',
+          component: () => import('../views/nested/ResultHomeView.vue')
+        },
+        {
           path: 'fe',
+          name: 'FeResult',
           component: () => import('../views/nested/FeResultView.vue')
         },
         {
           path: 'be',
+          name: 'BeResult',
           component: () => import('../views/nested/BeResultView.vue')
         },
         {
           path: 'cloud',
+          name: 'CloudResult',
           component: () => import('../views/nested/CloudResultView.vue')
         }
       ]
