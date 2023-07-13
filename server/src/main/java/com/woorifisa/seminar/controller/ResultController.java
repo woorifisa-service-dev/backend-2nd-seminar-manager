@@ -1,12 +1,10 @@
 package com.woorifisa.seminar.controller;
 
-import com.woorifisa.seminar.dto.MemberInfo;
 import com.woorifisa.seminar.dto.common.CommonResponse;
 import com.woorifisa.seminar.dto.result.ResultInfoResponse;
 import com.woorifisa.seminar.dto.result.ResultScoreResponse;
 import com.woorifisa.seminar.service.ResultService;
 import java.util.List;
-import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,12 +32,10 @@ public class ResultController {
 //		
 //	}
 //	
-    @GetMapping(path = "/score/classes/{classId}/seminars/{seminarTypeId}/subjects/{subjectId}")
-    public ResponseEntity<CommonResponse<ResultScoreResponse>> getResultScore(HttpSession session,
-                                                                              @PathVariable Long classId,
-                                                                              @PathVariable Long seminarTypeId,
-                                                                              @PathVariable Long subjectId) {
-        MemberInfo member = (MemberInfo) session.getAttribute(MemberInfo.KEY);
-        return CommonResponse.create(HttpStatus.OK, resultService.getScoreByUser(member.getId(), subjectId));
+    @GetMapping(path = "/score/classes/{classId}/seminars/{seminarTypeId}/subjects/{subjectId}/members/{memberId}")
+    public ResponseEntity<CommonResponse<ResultScoreResponse>> getResultScore(@PathVariable Long subjectId,
+                                                                              @PathVariable Long memberId) {
+
+        return CommonResponse.create(HttpStatus.OK, resultService.getScoreByUser(memberId, subjectId));
     }
 }
