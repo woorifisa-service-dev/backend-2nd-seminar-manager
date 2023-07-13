@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class Top3Result {
 
-    private final Long id;
+    private final Long subjectId;
     private final String title;
     private final Long totalScore;
 

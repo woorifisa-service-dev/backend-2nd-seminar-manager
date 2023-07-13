@@ -42,8 +42,32 @@ public class OtherEstimationController {
 
         MemberInfo member = (MemberInfo) session.getAttribute(MemberInfo.KEY);
         List<EstimationResponse> estimationResponses =
-            otherEstimationService.estimateOtherTeamByStudent(subjectNo, member, estimations);
+            otherEstimationService.estimateOtherTeam(subjectNo, member, estimations);
 
+
+        return CommonResponse.create(CREATED, estimationResponses);
+    }
+
+    @PostMapping("/subjects/{subjectNo}/teacher")
+    public ResponseEntity<CommonResponse<List<EstimationResponse>>> estimateByTeacher(
+        HttpSession session, @PathVariable Long subjectNo,
+        @Validated @RequestBody List<EstimationRequest> estimations) {
+
+        MemberInfo member = (MemberInfo) session.getAttribute("TEACHER");
+        List<EstimationResponse> estimationResponses =
+            otherEstimationService.estimateOtherTeam(subjectNo, member, estimations);
+
+        return CommonResponse.create(CREATED, estimationResponses);
+    }
+
+    @PostMapping("/subjects/{subjectNo}/mentor")
+    public ResponseEntity<CommonResponse<List<EstimationResponse>>> estimateByMentor(
+        HttpSession session, @PathVariable Long subjectNo,
+        @Validated @RequestBody List<EstimationRequest> estimations) {
+
+        MemberInfo member = (MemberInfo) session.getAttribute("MENTOR");
+        List<EstimationResponse> estimationResponses =
+            otherEstimationService.estimateOtherTeam(subjectNo, member, estimations);
 
         return CommonResponse.create(CREATED, estimationResponses);
     }
