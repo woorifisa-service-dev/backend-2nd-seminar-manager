@@ -15,6 +15,10 @@ import com.woorifisa.seminar.entity.OtherEstimationItem;
 import com.woorifisa.seminar.entity.Subject;
 import com.woorifisa.seminar.entity.constant.EvaluationArea;
 import com.woorifisa.seminar.entity.constant.Type;
+import com.woorifisa.seminar.exception.auth.ForbiddenException;
+import com.woorifisa.seminar.exception.notfound.EstimationItemNotFoundException;
+import com.woorifisa.seminar.exception.notfound.MemberNotFoundException;
+import com.woorifisa.seminar.exception.notfound.SubjectNotFoundException;
 import com.woorifisa.seminar.repository.EstimationItemRepository;
 import com.woorifisa.seminar.repository.MemberRepository;
 import com.woorifisa.seminar.repository.OtherEstimationItemRepository;
@@ -45,7 +49,7 @@ public class OtherEstimationService {
         } else if (type == Type.TEACHER) {
             return findEstimationItemsForValuer(List.of(발표력, 기술성, 참여도));
         } else {
-            throw new IllegalArgumentException();
+            throw new ForbiddenException();
         }
     }
 
@@ -60,18 +64,19 @@ public class OtherEstimationService {
     public List<EstimationResponse> estimateOtherTeamByStudent(final Long subjectId, final MemberInfo memberInfo,
                                                                final List<EstimationRequest> estimations) {
 
-        Member member = memberRepository.findById(memberInfo.getId()).orElseThrow();
-        Subject subject = subjectRepository.findById(subjectId).orElseThrow();
+        Member member = memberRepository.findById(memberInfo.getId()).orElseThrow(MemberNotFoundException::new);
+        Subject subject = subjectRepository.findById(subjectId).orElseThrow(SubjectNotFoundException::new);
+
         OtherEstimation savedOe = otherEstimationRepository.save(new OtherEstimation(member, subject));
 
         List<EstimationResponse> items = new ArrayList<>();
         for (EstimationRequest eReq : estimations) {
             EstimationItem foundEi = estimationItemRepository.findById(eReq.getId())
-                                                             .orElseThrow();
+                                                             .orElseThrow(EstimationItemNotFoundException::new);
 
             items.add(new EstimationResponse(foundEi.getId(), foundEi.getTitle(), eReq.getScore()));
 
-            OtherEstimationItem oi = new OtherEstimationItem(foundEi, savedOe, eReq.getScore());
+            OtherEstimationItem oi = new OtherEstimationItem(foundEi, savedOe, eReq.getScore(), memberInfo.getRole());
             otherEstimationItemRepository.save(oi);
         }
 

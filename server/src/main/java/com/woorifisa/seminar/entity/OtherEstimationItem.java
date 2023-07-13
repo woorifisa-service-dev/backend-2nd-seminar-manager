@@ -1,10 +1,13 @@
 package com.woorifisa.seminar.entity;
 
+import com.woorifisa.seminar.entity.constant.Type;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -37,11 +40,17 @@ public class OtherEstimationItem {
     @Column
     private Integer score;
 
-    public OtherEstimationItem(EstimationItem estimationItem, OtherEstimation otherEstimation, Integer score) {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role_name")
+    private Type roleName;
+
+    public OtherEstimationItem(EstimationItem estimationItem, OtherEstimation otherEstimation,
+                               Integer score, Type roleName) {
         this.id = new Id(estimationItem.getId(), otherEstimation.getId());
         this.estimationItem = estimationItem;
         this.otherEstimation = otherEstimation;
         this.score = score;
+        this.roleName = roleName;
     }
 
     @NoArgsConstructor // 아무 인자 없는 생성자

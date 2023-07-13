@@ -6,13 +6,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public class ResultScoreResponse {
-	private final Integer teacherScore;
-	private final Integer mentorScore;
-	private final Integer othersScore;
-	private final Integer totalScore;
-	private final Integer teamScore;
+	private final Long teacherScore;
+	private final Long mentorScore;
+	private final Long othersScore;
+	private final Long totalScore;
+	
+	private final Long teamMemberTotalScore;
+	private final Double teamMemberAvgScore;
 
-	public static ResultScoreResponse from() {
-		return null;
+	public static ResultScoreResponse from(Long targetTeacherScore, Long targetMentorScore, Long targetStudentScore, Long targetTotalScore, Long targetTeamMemberTotalScore, Double targetTeamMemberAvgScore) {
+		return new ResultScoreResponse(targetTeacherScore, targetMentorScore, targetStudentScore, targetTotalScore, targetTeamMemberTotalScore, targetTeamMemberAvgScore);
 	}
 }
