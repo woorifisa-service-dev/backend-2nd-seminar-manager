@@ -98,22 +98,22 @@ input[type='range']::-webkit-slider-runnable-track {
   height: 100%;
   cursor: pointer;
   border-radius: 5px;
-  border: 2px solid #96b5ff;
+  border: 2px solid var(--light-blue);
 }
 
 input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 30px;
   height: 30px;
-  background: #6149ff;
+  background: var(--blue);
   box-shadow: 1px 1px 7px #6c6ad1;
   cursor: pointer;
-  box-shadow: -100vw 0 0 100vw #96b5ff;
+  box-shadow: -100vw 0 0 100vw var(--light-blue);
 }
 button {
   width: fit-content;
-  border: 1px solid #96b5ff;
-  background: #6149ff;
+  border: 1px solid var(--light-blue);
+  background: var(--blue);
   color: white;
   padding: 20px 40px;
   border-radius: 10px;
