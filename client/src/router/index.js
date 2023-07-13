@@ -57,7 +57,7 @@ const router = createRouter({
       component: () => import('../views/EstimationTeamListView.vue')
     },
     {
-      path: '/detail',
+      path: '/detail/:subjectId/:memberId',
       name: 'DetailResult',
       component: () => import('../views/nested/DetailResultView.vue')
     }

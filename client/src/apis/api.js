@@ -56,10 +56,10 @@ export const getTop3 = async (classId, seminarTypeId) => {
   return res.data;
 };
 
-export const getDetailTeam = async (classId, seminarTypeId, subjectId) => {
+export const getDetailTeam = async (classId, seminarTypeId, subjectId, memberId) => {
   const res = await axios.get(
     BASE_URL +
-      `/api/estimation/result/score/classes/${classId}/seminars/${seminarTypeId}/subjects/${subjectId}`
+      `/api/estimation/result/score/classes/${classId}/seminars/${seminarTypeId}/subjects/${subjectId}/members/${memberId}`
   );
   return res.data;
 };

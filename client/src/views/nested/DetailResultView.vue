@@ -61,11 +61,13 @@
 <script setup>
 import { ref, watchEffect } from 'vue';
 import { getDetailTeam } from '../../apis/api';
+import { useRoute } from 'vue-router';
 
 const resultScore = ref({});
+const route = useRoute();
 
 watchEffect(async () => {
-  const result = await getDetailTeam(1, 1, 3);
+  const result = await getDetailTeam(1, 1, route.params.subjectId, route.params.memberId);
   console.log('result: ', result.data);
   resultScore.value = result.data;
 });

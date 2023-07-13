@@ -18,15 +18,11 @@ const props = defineProps({
 const router = useRouter();
 
 const goDetailPage = () => {
-  // if (!props.team.memberList.includes(2)) {
-  //   alert('자기 팀만 선택하세요요욧!!!!!');
-  // } else {
-  //   router.push('/detail');
-  // }
+  const memberId = parseInt(JSON.parse(sessionStorage.getItem('member')).id);
 
   for (const el of props.team.memberList) {
-    if (el.id === 2) {
-      router.push('/detail');
+    if (el.id === memberId) {
+      router.push(`/detail/${props.team.subjectId}/${memberId}`);
       return;
     }
   }
