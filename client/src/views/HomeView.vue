@@ -1,9 +1,11 @@
 <template>
   <main>
     <h1>기술 세미나 평가</h1>
-    <button v-show="isLogin" @click="() => goPage(`/login`)">로그인</button>
+    <button v-show="isLogin" @click="() => goPage({ name: 'login', state: { login: isLogin } })">
+      로그인
+    </button>
     <div class="btn_wrap" v-show="!isLogin">
-      <button @click="() => goPage('/login')">로그아웃</button>
+      <button @click="onClickLogout">로그아웃</button>
       <button @click="() => goPage(`/estimation/select`)">평가하기</button>
       <button @click="() => goPage(`/result`)">결과보기</button>
     </div>
@@ -13,7 +15,13 @@
 <script setup>
 import { ref } from 'vue';
 import { goPage } from '../utils/pages.js';
+import { logout } from '../apis/api.js';
+
 const isLogin = ref(false);
+const onClickLogout = async () => {
+  isLogin.value = true;
+  await logout();
+};
 </script>
 
 <style scoped>

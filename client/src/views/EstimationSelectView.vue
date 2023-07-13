@@ -7,7 +7,7 @@
         <select name="class" id="class" v-model="selectedClass">
           <option value="none" disabled selected>다음 중 하나를 선택해주세요</option>
           <option v-for="(type, index) in classTypes" :key="index" :value="type">
-            {{ type }}
+            {{ type.name }}
           </option>
         </select>
       </div>
@@ -15,8 +15,12 @@
         <h2>seminar type select</h2>
         <select name="class" id="type" v-model="selectedType">
           <option value="none" disabled selected>다음 중 하나를 선택해주세요</option>
-          <option v-for="(type, index) in seminarTypes[selectedClass]" :key="index" :value="type">
-            {{ type }}
+          <option
+            v-for="(type, index) in seminarTypes[selectedClass.name]"
+            :key="index"
+            :value="type"
+          >
+            {{ type.title }}
           </option>
         </select>
       </div>
@@ -25,7 +29,10 @@
       :disabled="selectedClass === 'none' || selectedType === 'none'"
       @click="
         () =>
-          goPage({ name: `estimation list`, state: { clazz: selectedClass, type: selectedType } })
+          goPage({
+            name: `estimation list`,
+            state: { clazz: selectedClass.id, type: selectedType.id }
+          })
       "
     >
       평가하러 가기
@@ -38,17 +45,17 @@ import { ref, watch } from 'vue';
 import { goPage } from '../utils/pages.js';
 import { getclassNameAndSemiarType } from '../apis/api';
 
-const classTypes = ref(['service', 'engineering', 'ai']);
-const seminarTypes = ref({
-  service: ['front', 'back', 'cloud'],
-  engineering: ['1', '2', '3'],
-  ai: ['1', '2', '3']
-});
+const classTypes = ref([]);
+const seminarTypes = ref({});
 const selectedClass = ref('none');
 const selectedType = ref('none');
 
-watch(() => {
-  getclassNameAndSemiarType();
+watch(async () => {
+  const res = await getclassNameAndSemiarType();
+  res.forEach((v) => {
+    classTypes.value.push({ name: v.name, id: v.id });
+    seminarTypes.value[v.name] = v.seminarTypes;
+  });
 });
 </script>
 
