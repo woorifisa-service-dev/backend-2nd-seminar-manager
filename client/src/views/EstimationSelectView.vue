@@ -22,7 +22,10 @@
     <div>
       <button
         :disabled="selectedClass === 'none' || selectedType === 'none'"
-        @click="() => goPage(`/estimation`)"
+        @click="
+          () =>
+            goPage({ name: `estimation list`, state: { clazz: selectedClass, type: selectedType } })
+        "
       >
         평가하러 가기
       </button>
